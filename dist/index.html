@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM</title>
+    <script src="domtastic.js"></script>
+    <style>
+        .text {
+            width: 200px;
+            height: 200px;
+            background: red;
+        }
+        
+        .hover {
+            background: blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text"><span class="inner-text">Lorem ipsum dolor...</span></div>
+        <div class="text"><span class="inner-text">Lorem ipsum dolor...</span></div>
+        <div class="text"><span class="inner-text">Lorem ipsum dolor...</span></div>
+        <div class="text"><span class="inner-text">Lorem ipsum dolor...</span></div>
+        <div class="text"><span class="inner-text">Lorem ipsum dolor...</span></div>
+        <div class="text"><span class="inner-text">Lorem ipsum dolor...</span></div>
+        <div class="text"><span class="inner-text">Lorem ipsum dolor...</span></div>
+    </div>
+    <script>
+    /*
+        var events = [];
+        jQuery('body').on('customYee click', function(event) {
+            console.log(event)
+        });
+
+        jQuery('body').trigger('customYee');
+        jQuery('body').trigger('click');
+    */
+
+    $('.container').on('click', '.text', function(event) {
+        console.log('outher');
+       $(event.currentTarget).addClass('hover');
+     });
+
+    $('.container').on('click', '.inner-text', function(event) {
+        console.log('inner');
+       event.preventDefault();
+       event.stopPropagation();
+     });
+    
+    </script>
+</body>
+</html>

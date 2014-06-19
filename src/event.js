@@ -349,10 +349,35 @@ function delegateHandler(selector, handler, event) {
         match = closest.call([eventTarget], selector, this)[0];
     if (match && match !== this) {
         if(match === eventTarget || !event.isPropagationStopped || !event.isPropagationStopped()) {
-            handler.call(match, event);
+            handler.call(match, createEventObject(event, match));
         }
     }
 }
+
+
+/**
+ * Create custom custom event object and store the original event to the originalEvent property  
+ *
+ * @private
+ * @param {Event} event
+ * @param {Node} element 
+ * @param {Function} handler Event handler
+ */
+function createEventObject(event, match) {
+    var eventKey = Object.keys(event),
+        i = 0,
+        l = eventKey.length,
+        eventObject = {};
+
+    for (; i < l; i++) {
+        eventObject[eventKey[i]] = event[eventKey[i]];
+    }
+
+    eventObject.timeStamp = event.timeStamp || Date.now();
+    eventObject.currentTarget = match;
+
+    return eventObject;
+};
 
 /**
  * Simulate `mouseenter` and `mouseleave` events (using `mouseover` and `mouseout`).
